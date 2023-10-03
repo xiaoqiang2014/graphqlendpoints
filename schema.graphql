@@ -1,0 +1,54 @@
+const { gql } = require('apollo-server-express');
+
+const typeDefs = gql`
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    role: String!
+    createdAt: String!
+  }
+
+  type Reservation {
+    id: ID!
+    guestName: String!
+    guestContactInfo: String!
+    expectedArrivalTime: String!
+    reservedTableSize: Int!
+    status: String!
+  }
+
+  type LoginResponse {
+    message: String!
+  }
+
+  type Mutation {
+    registerGuest(name: String!, email: String!, password: String!): User!
+    registerEmployee(name: String!, email: String!, password: String!): User!
+    loginGuest(email: String!, password: String!): LoginResponse!
+    loginEmployee(email: String!, password: String!): LoginResponse!
+    createReservation(
+      guestName: String!
+      guestContactInfo: String!
+      expectedArrivalTime: String!
+      reservedTableSize: Int!
+      token: String!
+    ): Reservation!
+    updateReservation(
+      reservationId: ID!
+      guestName: String!
+      guestContactInfo: String!
+      expectedArrivalTime: String!
+      reservedTableSize: Int!
+      token: String!
+    ): Reservation!
+    updateGuestReservation(reservationId: ID!, status: String!, token: String!): Reservation!
+  }
+
+  type Query {
+    getAllGuestReservations(page: Int!, pageSize: Int!, token: String!): [Reservation!]!
+    getGuestReservations(token: String!): [Reservation!]!
+  }
+`;
+
+module.exports = typeDefs;
