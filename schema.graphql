@@ -48,6 +48,7 @@ const typeDefs = gql`
   type Query {
     getAllGuestReservations(page: Int!, pageSize: Int!, token: String!): [Reservation!]!
     getGuestReservations(token: String!): [Reservation!]!
+    searchGuestReservations(token: String!): [Reservation!]!
   }
 `;
 

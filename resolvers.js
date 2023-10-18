@@ -1,10 +1,54 @@
 const axios = require('axios');
 
-const API_BASE_URL = 'http://api.example.com'; // Replace with your API base URL
+const API_BASE_URL = 'http://rest:3000'; // Replace with your API base URL
 
 const resolvers = {
     Query: {
         // Add your query resolvers here
+        getAllGuestReservations: async (_, { page, pageSize, token }) => {
+            try {
+                // Check user permission using the provided token
+                // const { data, db } = await checkPermission(token);
+
+                // if (data.error) {
+                //     return { error: data.message };
+                // }
+
+                const response = await axios.get(`${API_BASE_URL}/reservations`, {
+                    params: {
+                        page,
+                        pageSize,
+                    },
+                });
+
+                return response.data;
+            } catch (error) {
+                console.log(error);
+                throw new Error('An error occurred');
+            }
+        },
+        searchGuestReservations: async (_, { date, status, token }) => {
+            try {
+                // Check user permission using the provided token
+                // const { data, db } = await checkPermission(token);
+
+                // if (data.error) {
+                //     return { error: data.message };
+                // }
+
+                const response = await axios.get(`${API_BASE_URL}/reservations`, {
+                    params: {
+                        date,
+                        status,
+                    },
+                });
+
+                return response.data;
+            } catch (error) {
+                console.log(error);
+                throw new Error('An error occurred');
+            }
+        },
     },
     Mutation: {
         registerGuest: async (_, { name, email, password }) => {
@@ -31,11 +75,11 @@ const resolvers = {
                 } = reservationInput;
 
                 // Check user permission using the provided token
-                const { data, db } = await checkPermission(token);
+                // const { data, db } = await checkPermission(token);
 
-                if (data.error) {
-                    return { error: data.message };
-                }
+                // if (data.error) {
+                //     return { error: data.message };
+                // }
 
                 const response = await axios.post(`${API_BASE_URL}/reservations`, {
                     guestName,
@@ -57,11 +101,11 @@ const resolvers = {
                 const token = reservationInput.token;
 
                 // Check user permission using the provided token
-                const { data, db } = await checkPermission(token);
+                // const { data, db } = await checkPermission(token);
 
-                if (data.error) {
-                    return { error: data.message };
-                }
+                // if (data.error) {
+                //     return { error: data.message };
+                // }
 
                 const response = await axios.put(`${API_BASE_URL}/reservations/${reservationId}`, {
                     guestName,
@@ -76,58 +120,15 @@ const resolvers = {
                 throw new Error('An error occurred');
             }
         },
-        getAllGuestReservations: async (_, { page, pageSize, token }) => {
-            try {
-                // Check user permission using the provided token
-                const { data, db } = await checkPermission(token);
-
-                if (data.error) {
-                    return { error: data.message };
-                }
-
-                const response = await axios.get(`${API_BASE_URL}/reservations`, {
-                    params: {
-                        page,
-                        pageSize,
-                    },
-                });
-
-                return response.data;
-            } catch (error) {
-                console.log(error);
-                throw new Error('An error occurred');
-            }
-        },
-        searchGuestReservations: async (_, { date, status, token }) => {
-            try {
-                // Check user permission using the provided token
-                const { data, db } = await checkPermission(token);
-
-                if (data.error) {
-                    return { error: data.message };
-                }
-
-                const response = await axios.get(`${API_BASE_URL}/reservations`, {
-                    params: {
-                        date,
-                        status,
-                    },
-                });
-
-                return response.data;
-            } catch (error) {
-                console.log(error);
-                throw new Error('An error occurred');
-            }
-        },
+        
         updateGuestReservation: async (_, { reservationId, status, token }) => {
             try {
                 // Check user permission using the provided token
-                const { data, db } = await checkPermission(token);
+                // const { data, db } = await checkPermission(token);
 
-                if (data.error) {
-                    return { error: data.message };
-                }
+                // if (data.error) {
+                //     return { error: data.message };
+                // }
 
                 const response = await axios.put(`${API_BASE_URL}/reservations/${reservationId}`, {
                     status,
